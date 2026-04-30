@@ -1,114 +1,154 @@
 DECLARE
   --VARIABLES
-  V_MM_FINALMF                 NUMBER := 0;
-  V_MM_PAST_RDG_MM             NUMBER := 0;
-  V_MM_PAST_PEAK_MM            NUMBER := 0;
-  V_MM_PAST_PEAK2_MM           NUMBER := 0;
-  V_PB_TARIFF_CODE             NUMBER := 0;
-  V_PB_CYCLE_NUMBER            NUMBER := 0;
-  V_PB_METER_READER_NO         NUMBER := 0;
-  V_PB_BOOK_NUMBER             NUMBER := 0;
-  V_PB_ROUTE_CODE              NUMBER := 0;
-  V_PB_START_METER             NUMBER := 0;
-  V_PB_START_METER_KVARH       NUMBER := 0;
-  V_PB_AVERAGE_UNIT            NUMBER := 0;
-  V_PB_AVERAGE_PEAK_UNIT       NUMBER := 0;
-  V_PB_AVERAGE_PEAK2_UNIT      NUMBER := 0;
-  V_PB_AVERAGE_NIGHT_UNIT      NUMBER := 0;
-  V_PB_AVERAGE_REST_UNIT       NUMBER := 0;
-  V_PB_AVERAGE_IMP_UNIT        NUMBER := 0;
-  V_PB_AVERAGE_EXP_UNIT        NUMBER := 0;
-  V_PB_NEW_AVG_UNIT            NUMBER := 0;
-  V_PB_NEW_AVG_PEAK_UNIT       NUMBER := 0;
-  V_PB_NEW_AVG_PEAK2_UNIT      NUMBER := 0;
-  V_PB_NEW_AVG_NIGHT_UNIT      NUMBER := 0;
-  V_PB_NEW_AVG_REST_UNIT       NUMBER := 0;
-  V_PB_NEW_AVG_IMP_UNIT        NUMBER := 0;
-  V_PB_NEW_AVG_EXP_UNIT        NUMBER := 0;
-  V_PB_PREVIOUS_READ_STATUS    VARCHAR2(4);
-  V_PB_LOCK_DAYS_FACTOR        NUMBER := 0;
-  V_PB_BILLING_FACTOR          NUMBER := 0;
-  V_PB_BILLING_PERIOD          NUMBER := 0;
-  V_PB_NUMBER_OF_DAYS          NUMBER := 0;
-  V_PB_LOCK_DAYS               NUMBER := 0;
-  V_PB_FUSE_MISC_CHARGE        NUMBER := 0;
-  V_PB_DELAY_PAYMENT_CHARGE    NUMBER := 0;
-  V_PB_PROVISIONAL_BILL_AMOUNT NUMBER := 0;
-  V_PB_BF_ARREARS_AMOUNT       NUMBER := 0;
-  V_PB_PAYDATE                 DATE;
-  V_PB_PROVI_BILL_AMOUNT_REF   NUMBER := 0;
-  V_PB_MTR_CHANGE_FLAG         NUMBER := 0;
-  V_PB_NEW_PAST_RDNG           NUMBER := 0;
-  V_PB_NEW_PAST_PEAK_RDNG      NUMBER := 0;
-  V_PB_NEW_PAST_PEAK2_RDNG     NUMBER := 0;
-  V_PB_NEW_PAST_NIGHT_RDNG     NUMBER := 0;
-  V_PB_NEW_PAST_REST_RDNG      NUMBER := 0;
-  V_AVERAGE_MAXIMUM_DEMAND     NUMBER := 0;
-  V_PB_LITIGATION_ARREARS      NUMBER := 0;
-  V_PB_THEFT_ARREARS           NUMBER := 0;
-  V_IMP_RDNG                   NUMBER := 0;
-  V_EXP_RDNG                   NUMBER := 0;
-  V_PB_START_METER_PEAK        NUMBER := 0;
-  V_PB_START_METER_PEAK2       NUMBER := 0;
-  V_PB_START_METER_NIGHT       NUMBER := 0;
-  V_PB_START_METER_REST        NUMBER := 0;
-  V_BULB_AMT                   NUMBER := 0;
-  V_B_AMT                      NUMBER := 0;
-  V_F_AMT                      NUMBER := 0;
-  V_T_AMT                      NUMBER := 0;
-  V_G_AMT                      NUMBER := 0;
-  V_CUS_CAT                    VARCHAR2(20);
-  V_CUS_TARIFF_CODE            VARCHAR2(20);
-  V_CUS_FEEDER_NO              NUMBER := 0;
-  V_CUS_CLOAD                  NUMBER := 0;
-  V_CUS_DEMAND                 NUMBER := 0;
-  V_CUS_KVAR                   NUMBER := 0;
-  V_CUS_CUST_STATUS            VARCHAR2(20);
-  V_CUS_CYCLE_NUMBER           NUMBER := 0;
-  V_CUS_AVG_UNIT_CUS           NUMBER := 0;
-  V_CUS_AVG_PEAK_UNIT_CUS      NUMBER := 0;
-  V_CUS_AVG_PEAK2_UNIT_CUS     NUMBER := 0;
-  V_CUS_AVG_NIGHT_UNIT_CUS     NUMBER := 0;
-  V_CUS_AVG_REST_UNIT_CUS      NUMBER := 0;
-  V_CUS_AVG_IMP_UNIT_CUS       NUMBER := 0;
-  V_CUS_AVG_EXP_UNIT_CUS       NUMBER := 0;
-  V_CUS_COMB_CODE              VARCHAR2(50);
-  V_CUS_METER_READER_NO        NUMBER := 0;
-  V_CUS_BOOK_NUMBER            NUMBER := 0;
-  V_CUS_ROUTE_CODE             NUMBER := 0;
-  V_SEASIONAL_INDICATOR        VARCHAR2(20);
-  V_FIXTURE_LOAD               NUMBER := 0;
-  V_ED_EXEMPTION_DATE          DATE;
-  V_CNAME                      VARCHAR2(100);
-  V_ADDRESS1                   VARCHAR2(150);
-  V_CONN_DATE                  NUMBER;
-  V_INDUSTRY_TYPE              VARCHAR2(15);
-  V_CUS_PHASE                  VARCHAR2(2);
-  V_SOLAR_CONSUMER             VARCHAR2(2);
-  V_SKY_CONSUMER               VARCHAR2(2);
-  V_SOLAR_AG_DATE              DATE;
-  V_SOLAR_RATE                 NUMBER := 0;
-  V_GOV_INDICATOR              VARCHAR2(2);
-  V_IMP_DIFF                   NUMBER := 0;
-  V_EXP_DIFF                   NUMBER := 0;
-  V_ACTUAL_CONSUMED_UNITS      NUMBER := 0;
-  V_CONSUMED_UNITS_KVARH       NUMBER := 0;
-  V_CONSUMED_UNITS_PEAK        NUMBER := 0;
-  V_CONSUMED_UNITS_PEAK2       NUMBER := 0;
-  V_CONSUMED_UNITS_NIGHT       NUMBER := 0;
-  V_CONSUMED_UNITS_REST        NUMBER := 0;
-  V_GTR_RDNG_CONS              NUMBER;
-  V_MM_PAST_KVARH_RDG_MM       NUMBER := 0;
-  V_MM_PAST_NIGHT_MM           NUMBER := 0;
-  V_MM_PAST_REST_MM            NUMBER := 0;
-  V_MM_PAST_RDG_IMP_MM         NUMBER := 0;
-  V_MM_PAST_RDG_EXP_MM         NUMBER := 0;
-  V_PEAK_RDNG                  NUMBER := 0;
-  V_PEAK2_RDNG                 NUMBER := 0;
-  V_PREV_BILL_DATE             NUMBER := 0;
-  V_CONSUMED_UNITS             NUMBER := 0;
-  V_MM_PEAK_PAST_RDG_MM        NUMBER := 0;
-  V_MM_PEAK2_PAST_RDG_MM       NUMBER := 0;
+  V_MM_FINALMF                  NUMBER := 0;
+  V_MM_PAST_RDG_MM              NUMBER := 0;
+  V_MM_PAST_PEAK_MM             NUMBER := 0;
+  V_MM_PAST_PEAK2_MM            NUMBER := 0;
+  V_PB_TARIFF_CODE              NUMBER := 0;
+  V_PB_CYCLE_NUMBER             NUMBER := 0;
+  V_PB_METER_READER_NO          NUMBER := 0;
+  V_PB_BOOK_NUMBER              NUMBER := 0;
+  V_PB_ROUTE_CODE               NUMBER := 0;
+  V_PB_START_METER              NUMBER := 0;
+  V_PB_START_METER_KVARH        NUMBER := 0;
+  V_PB_AVERAGE_UNIT             NUMBER := 0;
+  V_PB_AVERAGE_PEAK_UNIT        NUMBER := 0;
+  V_PB_AVERAGE_PEAK2_UNIT       NUMBER := 0;
+  V_PB_AVERAGE_NIGHT_UNIT       NUMBER := 0;
+  V_PB_AVERAGE_REST_UNIT        NUMBER := 0;
+  V_PB_AVERAGE_IMP_UNIT         NUMBER := 0;
+  V_PB_AVERAGE_EXP_UNIT         NUMBER := 0;
+  V_PB_NEW_AVG_UNIT             NUMBER := 0;
+  V_PB_NEW_AVG_PEAK_UNIT        NUMBER := 0;
+  V_PB_NEW_AVG_PEAK2_UNIT       NUMBER := 0;
+  V_PB_NEW_AVG_NIGHT_UNIT       NUMBER := 0;
+  V_PB_NEW_AVG_REST_UNIT        NUMBER := 0;
+  V_PB_NEW_AVG_IMP_UNIT         NUMBER := 0;
+  V_PB_NEW_AVG_EXP_UNIT         NUMBER := 0;
+  V_PB_PREVIOUS_READ_STATUS     VARCHAR2(4);
+  V_PB_LOCK_DAYS_FACTOR         NUMBER := 0;
+  V_PB_BILLING_FACTOR           NUMBER := 0;
+  V_PB_BILLING_PERIOD           NUMBER := 0;
+  V_PB_NUMBER_OF_DAYS           NUMBER := 0;
+  V_PB_LOCK_DAYS                NUMBER := 0;
+  V_PB_FUSE_MISC_CHARGE         NUMBER := 0;
+  V_PB_DELAY_PAYMENT_CHARGE     NUMBER := 0;
+  V_PB_PROVISIONAL_BILL_AMOUNT  NUMBER := 0;
+  V_PB_BF_ARREARS_AMOUNT        NUMBER := 0;
+  V_PB_PAYDATE                  DATE;
+  V_PB_PROVI_BILL_AMOUNT_REF    NUMBER := 0;
+  V_PB_MTR_CHANGE_FLAG          VARCHAR(2);
+  V_PB_NEW_PAST_RDNG            NUMBER := 0;
+  V_PB_NEW_PAST_PEAK_RDNG       NUMBER := 0;
+  V_PB_NEW_PAST_PEAK2_RDNG      NUMBER := 0;
+  V_PB_NEW_PAST_NIGHT_RDNG      NUMBER := 0;
+  V_PB_NEW_PAST_REST_RDNG       NUMBER := 0;
+  V_AVERAGE_MAXIMUM_DEMAND      NUMBER := 0;
+  V_PB_LITIGATION_ARREARS       NUMBER := 0;
+  V_PB_THEFT_ARREARS            NUMBER := 0;
+  V_IMP_RDNG                    NUMBER := 0;
+  V_EXP_RDNG                    NUMBER := 0;
+  V_PB_START_METER_PEAK         NUMBER := 0;
+  V_PB_START_METER_PEAK2        NUMBER := 0;
+  V_PB_START_METER_NIGHT        NUMBER := 0;
+  V_PB_START_METER_REST         NUMBER := 0;
+  V_BULB_AMT                    NUMBER := 0;
+  V_B_AMT                       NUMBER := 0;
+  V_F_AMT                       NUMBER := 0;
+  V_T_AMT                       NUMBER := 0;
+  V_G_AMT                       NUMBER := 0;
+  V_CUS_CAT                     VARCHAR2(20);
+  V_CUS_TARIFF_CODE             VARCHAR2(20);
+  V_CUS_FEEDER_NO               NUMBER := 0;
+  V_CUS_CLOAD                   NUMBER := 0;
+  V_CUS_DEMAND                  NUMBER := 0;
+  V_CUS_KVAR                    NUMBER := 0;
+  V_CUS_CUST_STATUS             VARCHAR2(20);
+  V_CUS_CYCLE_NUMBER            NUMBER := 0;
+  V_CUS_AVG_UNIT_CUS            NUMBER := 0;
+  V_CUS_AVG_PEAK_UNIT_CUS       NUMBER := 0;
+  V_CUS_AVG_PEAK2_UNIT_CUS      NUMBER := 0;
+  V_CUS_AVG_NIGHT_UNIT_CUS      NUMBER := 0;
+  V_CUS_AVG_REST_UNIT_CUS       NUMBER := 0;
+  V_CUS_AVG_IMP_UNIT_CUS        NUMBER := 0;
+  V_CUS_AVG_EXP_UNIT_CUS        NUMBER := 0;
+  V_CUS_COMB_CODE               VARCHAR2(50);
+  V_CUS_METER_READER_NO         NUMBER := 0;
+  V_CUS_BOOK_NUMBER             NUMBER := 0;
+  V_CUS_ROUTE_CODE              NUMBER := 0;
+  V_SEASIONAL_INDICATOR         VARCHAR2(20);
+  V_FIXTURE_LOAD                NUMBER := 0;
+  V_ED_EXEMPTION_DATE           DATE;
+  V_CNAME                       VARCHAR2(100);
+  V_ADDRESS1                    VARCHAR2(150);
+  V_CONN_DATE                   NUMBER;
+  V_INDUSTRY_TYPE               VARCHAR2(15);
+  V_CUS_PHASE                   VARCHAR2(2);
+  V_SOLAR_CONSUMER              VARCHAR2(2);
+  V_SKY_CONSUMER                VARCHAR2(2);
+  V_SOLAR_AG_DATE               DATE;
+  V_SOLAR_RATE                  NUMBER := 0;
+  V_GOV_INDICATOR               VARCHAR2(2);
+  V_IMP_DIFF                    NUMBER := 0;
+  V_EXP_DIFF                    NUMBER := 0;
+  V_ACTUAL_CONSUMED_UNITS       NUMBER := 0;
+  V_CONSUMED_UNITS_KVARH        NUMBER := 0;
+  V_CONSUMED_UNITS_PEAK         NUMBER := 0;
+  V_CONSUMED_UNITS_PEAK2        NUMBER := 0;
+  V_CONSUMED_UNITS_NIGHT        NUMBER := 0;
+  V_CONSUMED_UNITS_REST         NUMBER := 0;
+  V_GTR_RDNG_CONS               NUMBER;
+  V_MM_PAST_KVARH_RDG_MM        NUMBER := 0;
+  V_MM_PAST_NIGHT_MM            NUMBER := 0;
+  V_MM_PAST_REST_MM             NUMBER := 0;
+  V_MM_PAST_RDG_IMP_MM          NUMBER := 0;
+  V_MM_PAST_RDG_EXP_MM          NUMBER := 0;
+  V_PEAK_RDNG                   NUMBER := 0;
+  V_PEAK2_RDNG                  NUMBER := 0;
+  V_PREV_BILL_DATE              NUMBER := 0;
+  V_CONSUMED_UNITS              NUMBER := 0;
+  V_MM_PEAK_PAST_RDG_MM         NUMBER := 0;
+  V_MM_PEAK2_PAST_RDG_MM        NUMBER := 0;
+  V_MM_OLD_PAST_READING         NUMBER := 0;
+  V_MM_OLD_END_METER            NUMBER := 0;
+  V_MM_OLD_CONSUMPTION          NUMBER := 0;
+  V_MM_OLD_PAST_READING_KVARH   NUMBER := 0;
+  V_MM_FINAL_READING_KVARH      NUMBER := 0;
+  V_MM_OLD_CONSUMPTION_KVARH    NUMBER := 0;
+  V_MM_OLD_IMP_CONSUMPTION      NUMBER := 0;
+  V_MM_OLD_EXP_CONSUMPTION      NUMBER := 0;
+  V_CONSUMED_UNITS_OFF_PEAK_1   NUMBER := 0;
+  V_CONSUMED_UNITS_OFF_PEAK_2   NUMBER := 0;
+  V_MM_OLD_END_METER_PEAK       NUMBER := 0;
+  V_MM_OLD_END_METER_PEAK2      NUMBER := 0;
+  V_MM_OLD_END_METER_NIGHT      NUMBER := 0;
+  V_MM_OLD_END_METER_REST       NUMBER := 0;
+  V_MM_OLD_CONSUMPTION_PEAK     NUMBER := 0;
+  V_MM_OLD_CONSUMPTION_PEAK2    NUMBER := 0;
+  V_MM_OLD_CONSUMPTION_NIGHT    NUMBER := 0;
+  V_MM_OLD_CONSUMPTION_REST     NUMBER := 0;
+  
+  -- OFF PEAK VARIABLES
+  V_PB_START_METER_OFF_PEAK_1   NUMBER := 0;
+  V_PB_START_METER_OFF_PEAK_2   NUMBER := 0;
+  V_MM_OLD_END_METER_OFF_PEAK_1 NUMBER := 0;
+  V_MM_OLD_END_METER_OFF_PEAK_2 NUMBER := 0;
+  V_MM_OLD_CONSUMP_OFF_PEAK_1   NUMBER := 0;
+  V_MM_OLD_CONSUMP_OFF_PEAK_2   NUMBER := 0;
+  V_MM_PAST_OFF_PEAK_1_MM       NUMBER := 0;
+  V_PB_AVERAGE_OFF_PEAK_1_UNIT  NUMBER := 0;
+  V_PB_AVERAGE_OFF_PEAK_2_UNIT  NUMBER := 0;
+  V_PB_NEW_AVG_OFF_PEAK_1_UNIT  NUMBER := 0;
+  V_PB_NEW_AVG_OFF_PEAK_2_UNIT  NUMBER := 0;
+  V_PB_NEW_PAST_OFF_PEAK_1_RDNG NUMBER := 0;
+  V_PB_NEW_PAST_OFF_PEAK_2_RDNG NUMBER := 0;
+  V_OFF_PEAK_1_RDNG             NUMBER := 0;
+  V_MM_OFF_PEAK_1_PAST_RDG_MM   NUMBER := 0;
+  V_OFF_PEAK_2_RDNG             NUMBER := 0;
+  V_MM_OFF_PEAK_2_PAST_RDG_MM   NUMBER := 0;
+  V_MM_PAST_OFF_PEAK_2_MM       NUMBER := 0;
+  V_CUS_AVG_OFF_PEAK_1_UNIT_CUS NUMBER := 0;
+  V_CUS_AVG_OFF_PEAK_2_UNIT_CUS NUMBER := 0;
 
   --INPUTS:
   P_SUBDIVISION_CODE NUMBER(4) := &SUBDIVISION;
@@ -119,6 +159,7 @@ DECLARE
 BEGIN
   DBMS_OUTPUT.PUT_LINE('PROCESS ONGOING....');
   DBMS_OUTPUT.PUT_LINE('FETCHING DATA AND CALCULATING....');
+  DBMS_OUTPUT.PUT_LINE('-------------------------------------------------------------------------------------------------------------------------');
   FOR G41_VALUES IN (SELECT ROWID,
                             TRIM(ST.CONS_NO) CONS_NO,
                             TRIM(ST.BIL_DATE) BIL_DATE,
@@ -139,6 +180,8 @@ BEGIN
                             NVL(TRIM(ST.METER_SEQ), 1) METER_SEQ,
                             NVL(TRIM(ST.METER_TYPE), 'M') METER_TYPE,
                             NVL(TRIM(ST.PREPAID_FLAG), 'N') PREPAID_FLAG,
+                            TRIM(ST.OFF_PEAK_1_READING) OFF_PEAK_1,
+                            TRIM(ST.OFF_PEAK_2_READING) OFF_PEAK_2,
                             TRIM(ST.CREATED_BY) CREATED_BY
                        FROM G41_FILE_STAGING_TABLE_GPRS ST
                       WHERE ST.SUBDIVISION = P_SUBDIVISION_CODE
@@ -164,25 +207,35 @@ BEGIN
       SELECT NVL(MM.FINAL_MF, 1),
              MM.I_READING,
              MM.I_READING_PEAK,
-             MM.I_READING_PEAK_2
+             MM.I_READING_PEAK_2,
+             MM.I_READING_OFF_PEAK_1,
+             MM.I_READING_OFF_PEAK_2
         INTO V_MM_FINALMF,
              V_MM_PAST_RDG_MM,
              V_MM_PAST_PEAK_MM,
-             V_MM_PAST_PEAK2_MM
+             V_MM_PAST_PEAK2_MM,
+             V_MM_PAST_OFF_PEAK_1_MM,
+             V_MM_PAST_OFF_PEAK_2_MM
         FROM METER_MASTER MM
        WHERE MM.SUBDIVISION_CODE = P_SUBDIVISION_CODE
          AND MM.CUSTOMER_NO = G41_VALUES.CONS_NO;
     
       IF length(TO_CHAR(V_MM_PAST_RDG_MM)) >= 8 OR
          length(TO_CHAR(V_MM_PAST_PEAK_MM)) >= 8 OR
-         length(TO_CHAR(V_MM_PAST_PEAK2_MM)) >= 8 THEN
+         length(TO_CHAR(V_MM_PAST_PEAK2_MM)) >= 8 OR
+         length(TO_CHAR(V_MM_PAST_OFF_PEAK_1_MM)) >= 8 OR
+         length(TO_CHAR(V_MM_PAST_OFF_PEAK_2_MM)) >= 8 THEN
       
         DBMS_OUTPUT.PUT_LINE('MAIN METER INITIAL READINGS ENTER IS GRATER THAN EQUAL TO 8 DIGITS');
         DBMS_OUTPUT.PUT_LINE('CONS: ' || G41_VALUES.CONS_NO);
         DBMS_OUTPUT.PUT_LINE('MF: ' || V_MM_FINALMF);
         DBMS_OUTPUT.PUT_LINE('I_READING:' || V_MM_PAST_RDG_MM ||
                              '  I_READING_PEAK:' || V_MM_PAST_PEAK_MM ||
-                             ' I_READING_PEAK_2:' || V_MM_PAST_PEAK2_MM);
+                             '  I_READING_PEAK_2:' || V_MM_PAST_PEAK2_MM ||
+                             '  I_READING_OFF_PEAK_1:' ||
+                             V_MM_PAST_OFF_PEAK_1_MM ||
+                             '  I_READING_OFF_PEAK_2:' ||
+                             V_MM_PAST_OFF_PEAK_2_MM);
         DBMS_OUTPUT.PUT_LINE('-------------------------------------------------------------------------------------------------------------------------');
       END IF;
     ELSE
@@ -237,7 +290,9 @@ BEGIN
              NVL(CUS.SKY_CONSUMER, 'N'),
              CUS.SOLAR_AGREEMENT_DATE,
              CUS.SOLAR_RATE,
-             NVL(CUS.GOVT_INDICATOR, 'N')
+             NVL(CUS.GOVT_INDICATOR, 'N'),
+             CUS.OFF_PEAK_1_AVG_UNIT,
+             CUS.OFF_PEAK_2_AVG_UNIT
         INTO V_CUS_CAT,
              V_CUS_TARIFF_CODE,
              V_CUS_FEEDER_NO,
@@ -270,7 +325,9 @@ BEGIN
              V_SKY_CONSUMER,
              V_SOLAR_AG_DATE,
              V_SOLAR_RATE,
-             V_GOV_INDICATOR
+             V_GOV_INDICATOR,
+             V_CUS_AVG_OFF_PEAK_1_UNIT_CUS,
+             V_CUS_AVG_OFF_PEAK_2_UNIT_CUS
         FROM CUSTMASTER CUS
        WHERE CUS.CUSCODE = G41_VALUES.CONS_NO;
     EXCEPTION
@@ -377,7 +434,27 @@ BEGIN
              NVL(PB.B_AMT, 0),
              NVL(PB.F_AMT, 0),
              NVL(PB.T_AMT, 0),
-             NVL(PB.G_AMT, 0)
+             NVL(PB.G_AMT, 0),
+             DECODE(PB.NEW_AVG_UNIT_OFF_PEAK_1,
+                    NULL,
+                    NVL(PB.AVG_UNIT_NOD_OFF_PEAK_1, 0),
+                    PB.NEW_AVG_UNIT_OFF_PEAK_1),
+             DECODE(PB.NEW_AVG_UNIT_OFF_PEAK_2,
+                    NULL,
+                    NVL(PB.NEW_AVG_UNIT_OFF_PEAK_2, 0),
+                    PB.NEW_AVG_UNIT_OFF_PEAK_2),
+             PB.NEW_AVG_UNIT_OFF_PEAK_1,
+             PB.NEW_AVG_UNIT_OFF_PEAK_2,
+             PB.NEW_OFF_PEAK_1_REDG,
+             PB.NEW_OFF_PEAK_2_REDG,
+             DECODE(PB.NEW_OFF_PEAK_1_REDG,
+                    NULL,
+                    PB.PAST_OFF_PEAK_1_RDING,
+                    PB.NEW_OFF_PEAK_1_REDG),
+             DECODE(PB.NEW_OFF_PEAK_2_REDG,
+                    NULL,
+                    PB.PAST_OFF_PEAK_2_RDING,
+                    PB.NEW_OFF_PEAK_2_REDG)
         INTO V_PB_TARIFF_CODE,
              V_PB_CYCLE_NUMBER,
              V_PB_METER_READER_NO,
@@ -430,7 +507,15 @@ BEGIN
              V_B_AMT,
              V_F_AMT,
              V_T_AMT,
-             V_G_AMT
+             V_G_AMT,
+             V_PB_AVERAGE_OFF_PEAK_1_UNIT,
+             V_PB_AVERAGE_OFF_PEAK_2_UNIT,
+             V_PB_NEW_AVG_OFF_PEAK_1_UNIT,
+             V_PB_NEW_AVG_OFF_PEAK_2_UNIT,
+             V_PB_NEW_PAST_OFF_PEAK_1_RDNG,
+             V_PB_NEW_PAST_OFF_PEAK_2_RDNG,
+             V_PB_START_METER_OFF_PEAK_1,
+             V_PB_START_METER_OFF_PEAK_2
         FROM PRINTED_BILL PB
        WHERE PB.SUB_DIVISION_CODE = P_SUBDIVISION_CODE
          AND PB.CONSUMER_NO = G41_VALUES.CONS_NO
@@ -516,6 +601,31 @@ BEGIN
     IF (V_PEAK2_RDNG IS NULL) THEN
       V_PEAK2_RDNG := V_MM_PEAK2_PAST_RDG_MM;
     END IF;
+  
+    -- OFF PEAK
+    IF (V_PB_AVERAGE_OFF_PEAK_1_UNIT IS NULL) THEN
+      V_PB_AVERAGE_OFF_PEAK_1_UNIT := V_CUS_AVG_OFF_PEAK_1_UNIT_CUS;
+    END IF;
+  
+    IF (V_PB_AVERAGE_OFF_PEAK_2_UNIT IS NULL) THEN
+      V_PB_AVERAGE_OFF_PEAK_1_UNIT := V_CUS_AVG_OFF_PEAK_2_UNIT_CUS;
+    END IF;
+  
+    IF (V_PB_START_METER_OFF_PEAK_1 IS NULL) THEN
+      V_PB_START_METER_OFF_PEAK_1 := V_MM_PAST_OFF_PEAK_1_MM;
+    END IF;
+  
+    IF (V_PB_START_METER_OFF_PEAK_2 IS NULL) THEN
+      V_PB_START_METER_OFF_PEAK_2 := V_MM_PAST_OFF_PEAK_2_MM;
+    END IF;
+  
+    IF (V_OFF_PEAK_1_RDNG IS NULL) THEN
+      V_OFF_PEAK_1_RDNG := V_MM_OFF_PEAK_1_PAST_RDG_MM;
+    END IF;
+  
+    IF (V_OFF_PEAK_2_RDNG IS NULL) THEN
+      V_OFF_PEAK_2_RDNG := V_MM_OFF_PEAK_2_PAST_RDG_MM;
+    END IF;
     V_PREV_BILL_DATE := NULL;
   
     -- CHECK IF CONSUMER IS NORMAL,SKY,OR SOLAR      
@@ -537,13 +647,15 @@ BEGIN
   
     IF (NVL(G41_VALUES.STA, ' ') = 'U') THEN
     
-      V_CONSUMED_UNITS        := 0;
-      V_CONSUMED_UNITS_KVARH  := 0;
-      V_ACTUAL_CONSUMED_UNITS := V_CONSUMED_UNITS;
-      V_CONSUMED_UNITS_PEAK   := 0;
-      V_CONSUMED_UNITS_PEAK2  := 0;
-      V_CONSUMED_UNITS_NIGHT  := 0;
-      V_CONSUMED_UNITS_REST   := 0;
+      V_CONSUMED_UNITS            := 0;
+      V_CONSUMED_UNITS_KVARH      := 0;
+      V_ACTUAL_CONSUMED_UNITS     := V_CONSUMED_UNITS;
+      V_CONSUMED_UNITS_PEAK       := 0;
+      V_CONSUMED_UNITS_PEAK2      := 0;
+      V_CONSUMED_UNITS_NIGHT      := 0;
+      V_CONSUMED_UNITS_REST       := 0;
+      V_CONSUMED_UNITS_OFF_PEAK_1 := 0;
+      V_CONSUMED_UNITS_OFF_PEAK_2 := 0;
     
       /**********************************************************
                         CONSUMPTION CALCULATION
@@ -602,13 +714,129 @@ BEGIN
                                                G41_VALUES.REST,
                                                G41_VALUES.STA);
       V_CONSUMED_UNITS_REST := FLOOR(V_CONSUMED_UNITS_REST * V_MM_FINALMF);
+    
+      -- OFF PEAK 1
+      V_CONSUMED_UNITS_OFF_PEAK_1 := DIAL_COMPLETION(NVL(V_PB_START_METER_OFF_PEAK_1,
+                                                         0),
+                                                     G41_VALUES.OFF_PEAK_1,
+                                                     G41_VALUES.STA);
+      V_CONSUMED_UNITS_OFF_PEAK_1 := FLOOR(V_CONSUMED_UNITS_OFF_PEAK_1 *
+                                           V_MM_FINALMF);
+      -- OFF PEAK 2
+      V_CONSUMED_UNITS_OFF_PEAK_2 := DIAL_COMPLETION(NVL(V_PB_START_METER_OFF_PEAK_2,
+                                                         0),
+                                                     G41_VALUES.OFF_PEAK_2,
+                                                     G41_VALUES.STA);
+      V_CONSUMED_UNITS_OFF_PEAK_2 := FLOOR(V_CONSUMED_UNITS_OFF_PEAK_2 *
+                                           V_MM_FINALMF);
+    END IF;
+  
+    IF (NVL(V_PB_MTR_CHANGE_FLAG, ' ') = 'C') THEN
+      BEGIN
+      
+        SELECT MM.I_READING,
+               MM.OLD_PAST_KWH,
+               MM.OLD_FINAL_KWH,
+               NVL(MM.OLD_CONSUMPTION_KWH, 0),
+               NVL(MM.KVARH_READING, 0),
+               MM.OLD_PAST_KVARH,
+               MM.OLD_FINAL_KVARH,
+               NVL(MM.OLD_CONSUMPTION_KVARH, 0),
+               NVL(MM.OLD_IMP_CONSUMPTION, 0),
+               NVL(MM.OLD_EXP_CONSUMPTION, 0),
+               MM.I_READING_PEAK,
+               MM.I_READING_PEAK_2,
+               MM.I_READING_NIGHT,
+               MM.I_READING_REST,
+               MM.Old_Final_Rdng_Peak,
+               MM.Old_Final_Rdng_Peak_2,
+               MM.OLD_FINAL_RDNG_NIGHT,
+               MM.OLD_FINAL_RDNG_REST,
+               NVL(MM.OLD_CONSUMPTION_PEAK, 0),
+               NVL(MM.OLD_CONSUMPTION_PEAK_2, 0),
+               NVL(MM.OLD_CONSUMPTION_NIGHT, 0),
+               NVL(MM.OLD_CONSUMPTION_REST, 0),
+               MM.I_READING_OFF_PEAK_1,
+               MM.I_READING_OFF_PEAK_2,
+               MM.OLD_FINAL_RDNG_OFF_PEAK_1,
+               MM.OLD_FINAL_RDNG_OFF_PEAK_2,
+               NVL(MM.OLD_CONSUMPTION_OFF_PEAK_1, 0),
+               NVL(MM.OLD_CONSUMPTION_OFF_PEAK_2, 0)
+          INTO V_PB_START_METER,
+               V_MM_OLD_PAST_READING,
+               V_MM_OLD_END_METER,
+               V_MM_OLD_CONSUMPTION,
+               V_PB_START_METER_KVARH,
+               V_MM_OLD_PAST_READING_KVARH,
+               V_MM_FINAL_READING_KVARH,
+               V_MM_OLD_CONSUMPTION_KVARH,
+               V_MM_OLD_IMP_CONSUMPTION,
+               V_MM_OLD_EXP_CONSUMPTION,
+               V_PB_START_METER_PEAK,
+               V_PB_START_METER_PEAK2,
+               V_PB_START_METER_NIGHT,
+               V_PB_START_METER_REST,
+               V_MM_OLD_END_METER_PEAK,
+               V_MM_OLD_END_METER_PEAK2,
+               V_MM_OLD_END_METER_NIGHT,
+               V_MM_OLD_END_METER_REST,
+               V_MM_OLD_CONSUMPTION_PEAK,
+               V_MM_OLD_CONSUMPTION_PEAK2,
+               V_MM_OLD_CONSUMPTION_NIGHT,
+               V_MM_OLD_CONSUMPTION_REST,
+               V_PB_START_METER_OFF_PEAK_1,
+               V_PB_START_METER_OFF_PEAK_2,
+               V_MM_OLD_END_METER_OFF_PEAK_1,
+               V_MM_OLD_END_METER_OFF_PEAK_2,
+               V_MM_OLD_CONSUMP_OFF_PEAK_1,
+               V_MM_OLD_CONSUMP_OFF_PEAK_2
+          FROM METER_MASTER MM
+         WHERE MM.SUBDIVISION_CODE = P_SUBDIVISION_CODE
+           AND MM.CUSTOMER_NO = G41_VALUES.CONS_NO;
+      EXCEPTION
+        WHEN OTHERS THEN
+          --  P_FILE_ERR_MSG := 'SYSTEM IS NOT FINDING METER DETAILS OF CYCLE CHANGE CONSUMER ' ||
+          --                  G41_VALUES.CONS_NO;
+          -- V_EXIT_FLAG    := 'Y';
+          NULL;
+      END;
+    
+      IF (V_SOLAR_CONSUMER = 'Y' or V_SKY_CONSUMER = 'Y') THEN
+        V_CONSUMED_UNITS := V_CONSUMED_UNITS + V_MM_OLD_CONSUMPTION +
+                            (NVL(V_MM_OLD_IMP_CONSUMPTION, 0) -
+                            NVL(V_MM_OLD_EXP_CONSUMPTION, 0));
+      ELSE
+        --  Add Old Consumption to Current consumption
+        V_CONSUMED_UNITS := V_CONSUMED_UNITS + V_MM_OLD_CONSUMPTION +
+                            (NVL(V_MM_OLD_IMP_CONSUMPTION, 0) -
+                            NVL(V_MM_OLD_EXP_CONSUMPTION, 0));
+      END IF;
+      V_CONSUMED_UNITS_KVARH  := V_CONSUMED_UNITS_KVARH +
+                                 V_MM_OLD_CONSUMPTION_KVARH;
+      V_ACTUAL_CONSUMED_UNITS := V_CONSUMED_UNITS;
+      V_CONSUMED_UNITS_PEAK   := V_CONSUMED_UNITS_PEAK +
+                                 V_MM_OLD_CONSUMPTION_PEAK;
+    
+      V_CONSUMED_UNITS_PEAK2 := V_CONSUMED_UNITS_PEAK2 +
+                                V_MM_OLD_CONSUMPTION_PEAK2;
+    
+      V_CONSUMED_UNITS_NIGHT := V_CONSUMED_UNITS_NIGHT +
+                                V_MM_OLD_CONSUMPTION_NIGHT;
+    
+      V_CONSUMED_UNITS_REST       := V_CONSUMED_UNITS_REST +
+                                     V_MM_OLD_CONSUMPTION_REST;
+      V_CONSUMED_UNITS_OFF_PEAK_1 := V_CONSUMED_UNITS_OFF_PEAK_1 +
+                                     V_MM_OLD_CONSUMP_OFF_PEAK_1;
+    
+      V_CONSUMED_UNITS_OFF_PEAK_2 := V_CONSUMED_UNITS_OFF_PEAK_2 +
+                                     V_MM_OLD_CONSUMP_OFF_PEAK_2;
     END IF;
   
     --CHECK CALCULATED CONSUMER UNIT LENGTH
     IF LENGTH(TO_CHAR(V_CONSUMED_UNITS)) >= 9 THEN
       DBMS_OUTPUT.PUT_LINE('CONSUME GRATER CONS: ' || G41_VALUES.CONS_NO ||
                            ' CONSUM_UNIT:' || V_CONSUMED_UNITS);
-    --KVARH
+      --KVARH
     ELSIF LENGTH(TO_CHAR(V_CONSUMED_UNITS_KVARH)) >= 9 THEN
       DBMS_OUTPUT.PUT_LINE('CONSUME KVARH GRATER CONS: ' ||
                            G41_VALUES.CONS_NO || ' CONSUM_UNIT:' ||
@@ -620,30 +848,44 @@ BEGIN
                            G41_VALUES.CONS_NO || ' CONSUM_UNIT:' ||
                            V_CONSUMED_UNITS_PEAK);
     
-    --PEAK 2
+      --PEAK 2
     ELSIF LENGTH(TO_CHAR(V_CONSUMED_UNITS_PEAK2)) >= 9 THEN
       DBMS_OUTPUT.PUT_LINE('CONSUME PK2 GRATER CONS: ' ||
                            G41_VALUES.CONS_NO || ' CONSUM_UNIT:' ||
                            V_CONSUMED_UNITS_PEAK2);
     
-    --NIGHT
+      --NIGHT
     ELSIF LENGTH(TO_CHAR(V_CONSUMED_UNITS_NIGHT)) >= 9 THEN
       DBMS_OUTPUT.PUT_LINE('CONSUME NIGHT GRATER CONS: ' ||
                            G41_VALUES.CONS_NO || ' CONSUM_UNIT:' ||
                            V_CONSUMED_UNITS_NIGHT);
     
-    -- REST
+      -- REST
     ELSIF LENGTH(TO_CHAR(V_CONSUMED_UNITS_REST)) >= 9 THEN
       DBMS_OUTPUT.PUT_LINE('CONSUME REST GRATER CONS: ' ||
                            G41_VALUES.CONS_NO || ' CONSUM_UNIT:' ||
                            V_CONSUMED_UNITS_REST);
+    
+      -- OFF PEAK 1
+    ELSIF LENGTH(TO_CHAR(V_CONSUMED_UNITS_OFF_PEAK_1)) >= 9 THEN
+      DBMS_OUTPUT.PUT_LINE('CONSUME REST GRATER CONS: ' ||
+                           G41_VALUES.CONS_NO || ' CONSUM_UNIT:' ||
+                           V_CONSUMED_UNITS_OFF_PEAK_1);
+    
+      -- OFF PEAK 2
+    ELSIF LENGTH(TO_CHAR(V_CONSUMED_UNITS_OFF_PEAK_2)) >= 9 THEN
+      DBMS_OUTPUT.PUT_LINE('CONSUME REST GRATER CONS: ' ||
+                           G41_VALUES.CONS_NO || ' CONSUM_UNIT:' ||
+                           V_CONSUMED_UNITS_OFF_PEAK_2);
+    
     END IF;
   END LOOP; -- G41_VALUES LOOP END
   DBMS_OUTPUT.PUT_LINE('PROCESS COMPLEATED');
-  
-  EXCEPTION
-      WHEN OTHERS THEN
-         DBMS_OUTPUT.PUT_LINE('TECHNICAL ERROR:' || SQLERRM);
-         DBMS_OUTPUT.PUT_LINE('ERROR LINE: ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE);
+
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('TECHNICAL ERROR:' || SQLERRM);
+    DBMS_OUTPUT.PUT_LINE('ERROR LINE: ' ||
+                         DBMS_UTILITY.FORMAT_ERROR_BACKTRACE);
 END;
 /
